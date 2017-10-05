@@ -4,7 +4,7 @@
 *	Receives a line of input from the keyboard and sends it to the server
 *	Receives a response from the server and displays it.
 *
-*	@author: Michael Fahy
+*	@author: Maika Fujii
 @	version: 2.1
 */
 
@@ -40,7 +40,7 @@ class TCPClient {
         welcomeMessage = inFromServer.readLine();
         System.out.println("FROM SERVER:" + welcomeMessage);
 
-
+	//Insert code here
         System.out.print("First Sentence: ");
         sentence = inFromUser.readLine();
         outToServer.println(sentence);
