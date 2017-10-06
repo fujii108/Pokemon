@@ -7,7 +7,7 @@
 *	@author: Maika Fujii
 *   ID: 1935412
 *   Email: fujii108@mail.chapman.edu
-*   Course: CPSC-353
+*   Course: CPSC-353 - 9:00-9:50
 *   Assignment #3
 @	  version: 2.1
 */
@@ -31,14 +31,18 @@ class Email {
 
         //Get information for email
         System.out.println("Enter the sender email address receiver address, and subject: \n");
+        //From email
         System.out.print("FROM: ");
         fromEmail = inFromUser.readLine();
+        //To email
         System.out.print("TO: ");
         toEmail = inFromUser.readLine();
+        //subject of email
         System.out.print("SUBJECT: ");
         subject = inFromUser.readLine();
 
-        System.out.println("Enter 'done' when done typing. \nContent: \n");
+        //Record body of email with while loop
+        System.out.println("Enter 'done' on its own line when done typing. \nContent: ");
         int check = 1;
         while(check != 0){
             content = content + addContent;
@@ -49,7 +53,7 @@ class Email {
         }
 
         Socket clientSocket = null;
-
+    //TCP Connection
 		try
 		{
 			clientSocket = new Socket("smtp.chapman.edu", 25);
@@ -72,25 +76,35 @@ class Email {
         modifiedSentence = inFromServer.readLine();
         System.out.println("FROM SERVER: " + modifiedSentence);
 
-        //TO and FROM Email Addresses
+        //SMTP - send mail and print to console
+        System.out.println("Send to Server MAIL FROM: " + fromEmail);
         outToServer.println("MAIL FROM: "+fromEmail);
         modifiedSentence = inFromServer.readLine();
         System.out.println("MAIL FROM:"+ modifiedSentence);
 
+        System.out.println("Send to Server RCPT TO: "+toEmail);
         outToServer.println("RCPT TO: "+toEmail);
         modifiedSentence = inFromServer.readLine();
         System.out.println("RCPT TO: "+modifiedSentence);
 
         //DATA
+        System.out.println("Send to Server DATA");
         outToServer.println("DATA");
         modifiedSentence = inFromServer.readLine();
         System.out.println("FROM SERVER: " + modifiedSentence);
 
+        System.out.println("Send to Server SUBJECT: "+subject);
         outToServer.println("SUBJECT: "+subject);
+        System.out.println("Send to Server \n"+content);
         outToServer.println(content);
+        System.out.println(".");
         outToServer.println(".");
         modifiedSentence = inFromServer.readLine();
         System.out.println("FROM SERVER: "+modifiedSentence);
+
+        //indicate the process has completed
+        System.out.println("Email Process Complete :)");
+        outToServer.println("QUIT");
 
 
 
