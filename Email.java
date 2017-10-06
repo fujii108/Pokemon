@@ -45,7 +45,7 @@ class Email {
         System.out.println("Enter 'done' on its own line when done typing. \nContent: ");
         int check = 1;
         while(check != 0){
-            content = content + addContent + " ";
+            content = content + addContent + "\n";
             addContent = inFromUser.readLine();
             if(addContent.equals("done") || addContent.equals("Done")){
                 check = 0;
