@@ -95,7 +95,7 @@ class Email {
 
         System.out.println("Send to Server SUBJECT: "+subject);
         outToServer.println("SUBJECT: "+subject);
-        System.out.println("Send to Server \n"+content);
+        System.out.println("Send to Server Content: \n"+content);
         outToServer.println(content);
         System.out.println(".");
         outToServer.println(".");
@@ -103,8 +103,10 @@ class Email {
         System.out.println("FROM SERVER: "+modifiedSentence);
 
         //indicate the process has completed
-        System.out.println("Email Process Complete :)");
+        System.out.println("QUIT");
         outToServer.println("QUIT");
+        modifiedSentence = inFromServer.readLine();
+        System.out.println("FROM SERVER: "+modifiedSentence);
 
 
 
