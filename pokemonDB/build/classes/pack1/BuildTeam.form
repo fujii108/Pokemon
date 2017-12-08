@@ -97,7 +97,7 @@
                   <Component id="jScrollPane1" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="222" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -181,7 +181,7 @@
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Rules:&#xa;1. Team Size limited to 6.&#xa;2. tbd"/>
+            <Property name="text" type="java.lang.String" value="Rules:&#xa;1. Team size limited to 6.&#xa;2. Team size must be 6.&#xa;3. Team will not be added if do not meet rules."/>
           </Properties>
         </Component>
       </SubComponents>

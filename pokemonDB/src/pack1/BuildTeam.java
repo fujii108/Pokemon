@@ -46,11 +46,9 @@ public class BuildTeam extends javax.swing.JFrame {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/pokemon?" + 
                     "user=cpsc408&password=FY17cpsc408&noAccessToProcedureBodies=true");
             
-            //Pokedex display table.
+            //Table of names of Pokemon.
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT name FROM Attributes");
-            java.sql.ResultSetMetaData rsmetadata = rs.getMetaData();
-            
             //pass data into jtable
             DefaultListModel dlm = new DefaultListModel();
      
@@ -70,23 +68,16 @@ public class BuildTeam extends javax.swing.JFrame {
         } finally {
             // Close the result set handle.
             if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) { /* Ignore. */ }
+                try {rs.close();} catch (SQLException ex) { /* Ignore. */ }
                 rs = null;
             }
             // Close the statement handle.
             if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException ex) { /* Ignore. */ }
+                try {stmt.close();} catch (SQLException ex) { /* Ignore. */ }
                 stmt = null;
             }
             // Close the connection handle.
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) { /* Ignore. */ }
+            if (conn != null) {try {conn.close();} catch (SQLException ex) { /* Ignore. */ }
                 conn = null;
             }
          }
@@ -142,7 +133,7 @@ public class BuildTeam extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Rules:\n1. Team Size limited to 6.\n2. tbd");
+        jTextArea1.setText("Rules:\n1. Team size limited to 6.\n2. Team size must be 6.\n3. Team will not be added if do not meet rules.");
         jScrollPane3.setViewportView(jTextArea1);
 
         jButton3.setText("Continue");
@@ -226,7 +217,7 @@ public class BuildTeam extends javax.swing.JFrame {
                         .addComponent(jButton3))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
