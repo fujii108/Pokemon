@@ -5,6 +5,17 @@
  */
 package pack1;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author dillontidgewell
@@ -14,8 +25,64 @@ public class TeamInfo extends javax.swing.JFrame {
     /**
      * Creates new form TeamInfo
      */
-    public TeamInfo() {
+    public TeamInfo() throws ClassNotFoundException{
         initComponents();
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null; 
+         try {
+            // Establish the connection to the database.
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/pokemon?" + 
+                    "user=cpsc408&password=FY17cpsc408&noAccessToProcedureBodies=true");
+            
+            //Team display table.
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM TeamInfo");
+            ResultSetMetaData rsmetadata = rs.getMetaData();
+            //store number of columns
+            int columns = rsmetadata.getColumnCount();
+            //pass data into jtable
+            DefaultTableModel dtm = new DefaultTableModel();
+            Vector column_names = new Vector();
+            Vector data_rows = new Vector();
+            for(int i = 1; i <= columns; ++i){
+                column_names.addElement(rsmetadata.getColumnName(i));
+            }
+            dtm.setColumnIdentifiers(column_names);
+            while(rs.next()){
+                data_rows = new Vector();
+                for(int j =1; j <= columns; ++j){
+                    data_rows.addElement(rs.getString(j));
+                }
+                dtm.addRow(data_rows);   
+            }
+            //pass default table data into teamInfo
+            teamTable.setModel(dtm);
+            //END OF displayTeams DISPLAY BLOCK
+            
+         }catch (SQLException ex) {
+            // Handle any SQL errors.
+            System.out.println("SQLException: "+ ex.getMessage());
+            System.out.println("SQLState: "+ ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        } finally {
+            // Close the result set handle.
+            if (rs != null) {
+                try {rs.close();} catch (SQLException ex) { /* Ignore. */ }
+                rs = null;
+            }
+            // Close the statement handle.
+            if (stmt != null) {
+                try {stmt.close();
+                } catch (SQLException ex) { /* Ignore. */ }
+                stmt = null;}
+            // Close the connection handle.
+            if (conn != null) {
+                try {conn.close();} catch (SQLException ex) { /* Ignore. */ }
+                conn = null;
+            }
+         }
     }
 
     /**
@@ -27,17 +94,80 @@ public class TeamInfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        headerLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        teamInfoTable = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        teamTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        headerLabel.setText("Team Info");
+        headerLabel.setName(""); // NOI18N
+
+        teamInfoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(teamInfoTable);
+
+        teamTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(teamTable);
+
+        jButton1.setText("Get Info");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(166, 166, 166)
+                                .addComponent(headerLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(142, 142, 142)
+                                .addComponent(jButton1)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(headerLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -73,11 +203,21 @@ public class TeamInfo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TeamInfo().setVisible(true);
+                try {
+                    new TeamInfo().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(TeamInfo.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel headerLabel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable teamInfoTable;
+    private javax.swing.JTable teamTable;
     // End of variables declaration//GEN-END:variables
 }
